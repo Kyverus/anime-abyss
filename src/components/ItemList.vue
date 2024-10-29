@@ -8,7 +8,7 @@ defineProps<{ list: Item[] }>();
 </script>
 
 <template>
-  <div class="container mx-auto flex flex-wrap justify-center">
+  <div class="container mx-auto flex flex-wrap gap-4 justify-center">
     <div v-for="item of list" class="bg-red-200 border-blue-300 w-[235px]">
       <img
         :src="item.images.jpg.image_url"
