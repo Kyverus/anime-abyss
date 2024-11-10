@@ -9,7 +9,7 @@ let pagination = ref({
   current_page: 1,
   last_visible_page: 1,
 });
-let page = ref(1040);
+let page = ref(1);
 
 watchEffect(() => {
   fetch(

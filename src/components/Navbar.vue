@@ -11,7 +11,10 @@
         <RouterLink to="/manga"><div class="px-5">MANGA</div></RouterLink>
         <RouterLink to="/"><div class="px-5">EXTRA</div></RouterLink>
       </div>
-      <div></div>
+      <div class="flex items-center justify-center">
+        <RouterLink to="/login"><div class="px-2">LOGIN</div></RouterLink>
+        <RouterLink to="/register"><div class="px-2">REGISTER</div></RouterLink>
+      </div>
     </div>
   </div>
 </template>
