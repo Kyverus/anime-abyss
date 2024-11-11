@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { reactive, ref, inject } from "vue";
-import UserInputValidator from "./UserInputValidator.vue";
+import { reactive, ref } from "vue";
+import UserInputValidator from "../UserInputValidator.vue";
+import axios from "../../api/axios.ts";
+import { AxiosError, isAxiosError } from "axios";
+import { useRouter } from "vue-router";
 
-const setAuth = inject("setAuth", (value: String) => {
-  console.log(`Passed ${value}: But function not found`);
-});
-const token = inject("token", "");
+const router = useRouter();
 
 const formDetails = reactive({
   username: "",
@@ -16,31 +16,40 @@ const formDetails = reactive({
 
 const hasErrors = ref<Boolean>(false);
 
+async function registerUser() {
+  try {
+    const response = await axios.post(
+      "/api/users/register",
+      JSON.stringify({
+        username: formDetails.username,
+        email: formDetails.email,
+        password: formDetails.password,
+        confirmPassword: formDetails.confirmPassword,
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+
+    console.log(response.data);
+
+    router.push("/login");
+  } catch (error: unknown | AxiosError) {
+    if (isAxiosError(error)) {
+      console.log(error);
+      console.log(error.response?.data);
+    } else {
+      console.log(error);
+    }
+  }
+}
+
 function handleSumbit(e: any) {
   e.preventDefault();
+
   if (hasErrors.value) return;
-  fetch(`https://anime-abyss-backend.vercel.app/api/users/register`, {
-    method: "POST",
-    body: JSON.stringify({
-      username: formDetails.username,
-      email: formDetails.email,
-      password: formDetails.password,
-      confirmPassword: formDetails.confirmPassword,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      setAuth(res);
-      return;
-    })
-    .catch((err) => {
-      console.log(err);
-      return;
-    });
+  registerUser();
 }
 
 function setErrors(value: Boolean) {
@@ -54,7 +63,7 @@ function setErrors(value: Boolean) {
       action=""
       class="flex flex-col w-[500px] bg-blue-400 mx-auto p-4 space-y-2 rounded-md text-black"
     >
-      <div class="text-center">REGISTER TO THE ABYSS {{ token }}</div>
+      <div class="text-center">REGISTER TO THE ABYSS</div>
       <br />
       <label for="username">USERNAME</label>
       <input v-model="formDetails.username" id="username" type="text" />

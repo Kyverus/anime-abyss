@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import UserInputValidator from "./UserInputValidator.vue";
+import UserInputValidator from "../UserInputValidator.vue";
+import { useRouter } from "vue-router";
+import axios, { axiosPrivate } from "../../api/axios";
+import { AxiosError, isAxiosError } from "axios";
 
+const router = useRouter();
 const formDetails = reactive({
   email: "",
   password: "",
@@ -9,24 +13,38 @@ const formDetails = reactive({
 
 const hasErrors = ref<Boolean>(false);
 
+async function loginUser() {
+  try {
+    const response = await axios.post(
+      "/api/users/login",
+      JSON.stringify({
+        email: formDetails.email,
+        password: formDetails.password,
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+
+    console.log(response.data);
+    axiosPrivate.defaults.headers.common[
+      "Authorization"
+    ] = `BEARER ${response.data.accessToken}`;
+    router.push("/listentries");
+  } catch (error: unknown | AxiosError) {
+    if (isAxiosError(error)) {
+      console.log(error.response?.data);
+    } else {
+      console.log(error);
+    }
+  }
+}
+
 function handleSumbit(e: any) {
   e.preventDefault();
   if (hasErrors.value) return;
-  fetch(`https://anime-abyss-backend.vercel.app/api/users/login`, {
-    method: "POST",
-    body: JSON.stringify({
-      email: formDetails.email,
-      password: formDetails.password,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      console.log(res);
-    });
+  loginUser();
 }
 
 function setErrors(value: Boolean) {
