@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
 import UserInputValidator from "../UserInputValidator.vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import axios, { axiosPrivate } from "../../api/axios";
-import { AxiosError, isAxiosError } from "axios";
+import { useAuthStore } from "../../stores/auth";
 
+const authStore = useAuthStore();
 const router = useRouter();
 const formDetails = reactive({
   email: "",
@@ -13,38 +13,14 @@ const formDetails = reactive({
 
 const hasErrors = ref<Boolean>(false);
 
-async function loginUser() {
-  try {
-    const response = await axios.post(
-      "/api/users/login",
-      JSON.stringify({
-        email: formDetails.email,
-        password: formDetails.password,
-      }),
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
-
-    console.log(response.data);
-    axiosPrivate.defaults.headers.common[
-      "Authorization"
-    ] = `BEARER ${response.data.accessToken}`;
-    router.push("/listentries");
-  } catch (error: unknown | AxiosError) {
-    if (isAxiosError(error)) {
-      console.log(error.response?.data);
-    } else {
-      console.log(error);
-    }
-  }
-}
-
-function handleSumbit(e: any) {
+async function handleSumbit(e: any) {
   e.preventDefault();
   if (hasErrors.value) return;
-  loginUser();
+  const res = await authStore.loginUser(formDetails);
+
+  if (res) {
+    router.push("/listentries");
+  }
 }
 
 function setErrors(value: Boolean) {
@@ -53,7 +29,7 @@ function setErrors(value: Boolean) {
 </script>
 
 <template>
-  <div class="min-h-dvh flex flex-col items-center mt-20">
+  <div class="flex flex-col items-center mt-20">
     <form
       action=""
       class="flex flex-col w-[500px] bg-blue-400 mx-auto p-4 space-y-2 rounded-md text-black"

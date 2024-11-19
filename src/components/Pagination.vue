@@ -1,5 +1,10 @@
 <script lang="ts" setup>
 import { computed } from "vue";
+import { addIcons } from "oh-vue-icons";
+import { HiChevronLeft, HiChevronRight } from "oh-vue-icons/icons";
+
+addIcons(HiChevronLeft, HiChevronRight);
+
 defineEmits(["pageHandle"]);
 const props = withDefaults(
   defineProps<{
@@ -25,15 +30,14 @@ const pageViewStart = computed(() => {
 </script>
 
 <template>
-  <div class="bg-blue-200">{{ page }} {{ maxPage }} {{ minPage }}</div>
-  <div class="flex items-center justify-center gap-5">
-    <div class="w-20 bg-green-500 text-ct-white">
+  <div class="flex items-center justify-center gap-5 py-10">
+    <div class="w-20 bg-abyss-purple-3 ml-5">
       <button
         v-if="page > minPage"
         @click="$emit('pageHandle', page - 1)"
         class="w-full"
       >
-        PREV
+        <v-icon name="hi-chevron-left" />
       </button>
     </div>
     <div class="w-[500px]">
@@ -41,23 +45,23 @@ const pageViewStart = computed(() => {
         class="flex flex-row flex-wrap items-center justify-center gap-2 grow"
       >
         <button
-          class="bg-slate-500 basis-1 grow"
+          class="bg-abyss-second basis-1 grow font-bold bg-abyss-blue-2"
           v-for="(_, i) in pageViewCount"
           @click="$emit('pageHandle', pageViewStart + i)"
-          :class="{ 'bg-blue-500': pageViewStart + i == page }"
+          :class="{ 'bg-abyss-purple-3': pageViewStart + i == page }"
         >
           {{ pageViewStart + i }}
         </button>
       </div>
     </div>
 
-    <div class="w-20 bg-green-500 text-ct-white">
+    <div class="w-20 bg-abyss-purple-3 mr-5">
       <button
         v-if="page < maxPage"
         @click="$emit('pageHandle', page + 1)"
         class="w-full"
       >
-        NEXT
+        <v-icon name="hi-chevron-right" />
       </button>
     </div>
   </div>

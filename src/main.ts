@@ -1,26 +1,13 @@
 import { createApp } from "vue";
+import pinia from "./stores/store.ts";
 import "./style.css";
 import App from "./App.vue";
-import { createRouter, createWebHistory } from "vue-router";
-import LoginPage from "./pages/auth/LoginPage.vue";
-import RegisterPage from "./pages/auth/RegisterPage.vue";
-import AnimePage from "./pages/AnimePage.vue";
-import MangaPage from "./pages/MangaPage.vue";
-import ListEntries from "./pages/protected/ListEntries.vue";
-
-const routes = [
-  { path: "/", component: AnimePage },
-  { path: "/login", component: LoginPage },
-  { path: "/register", component: RegisterPage },
-  { path: "/anime", component: AnimePage },
-  { path: "/manga", component: MangaPage },
-  { path: "/listentries", component: ListEntries },
-];
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
+import router from "./router/router.ts";
+import { OhVueIcon } from "oh-vue-icons";
 
 const app = createApp(App);
-app.use(router).mount("#app");
+
+app.use(pinia);
+app.use(router);
+app.component("v-icon", OhVueIcon);
+app.mount("#app");
