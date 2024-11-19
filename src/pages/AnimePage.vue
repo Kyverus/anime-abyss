@@ -2,6 +2,9 @@
 import { ref, watchEffect } from "vue";
 import ItemList from "../components/ItemList.vue";
 import Pagination from "../components/Pagination.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 let topAnime = ref([]);
 let pagination = ref({
@@ -22,13 +25,17 @@ watchEffect(() => {
     });
 });
 
+function goToAnimeInfo(id: any) {
+  router.push({ name: "animeInfo", params: { animeId: id } });
+}
+
 function pageHandler(value: number) {
   page.value = value;
 }
 </script>
 
 <template>
-  <ItemList :list="topAnime" class="mt-40" />
+  <ItemList :list="topAnime" class="mt-20" @infoClick="goToAnimeInfo" />
 
   <div v-if="topAnime.length > 0">
     <Pagination

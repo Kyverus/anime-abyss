@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import LogoutButton from "../pages/auth/LogoutButton.vue";
+import { useAuthStore } from "../stores/auth";
+
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -16,9 +19,14 @@ import LogoutButton from "../pages/auth/LogoutButton.vue";
         </RouterLink>
       </div>
       <div class="flex items-center justify-center">
-        <RouterLink to="/login"><div class="px-2">LOGIN</div></RouterLink>
-        <RouterLink to="/register"><div class="px-2">REGISTER</div></RouterLink>
-        <LogoutButton />
+        <template v-if="!authStore.auth.isLoggedIn">
+          <RouterLink to="/login"><div class="px-2">LOGIN</div></RouterLink>
+          <RouterLink to="/register"
+            ><div class="px-2">REGISTER</div></RouterLink
+          >
+        </template>
+
+        <LogoutButton v-if="authStore.auth.isLoggedIn" />
       </div>
     </div>
   </div>

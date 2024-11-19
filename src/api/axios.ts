@@ -17,7 +17,7 @@ function addInstanceInterceptors(axiosInstance: Axios) {
   axiosInstance.interceptors.response.use(
     (res) => res,
     async (error) => {
-      if (error.response.status === 403 || error.response.status === 401) {
+      if (error.response.status === 403) {
         try {
           const refRes = await axios.get(BASE_URL + "/api/users/refresh", {
             withCredentials: true,
@@ -27,6 +27,10 @@ function addInstanceInterceptors(axiosInstance: Axios) {
             axiosPrivate.defaults.headers.common[
               "Authorization"
             ] = `BEARER ${refRes.data.accessToken}`;
+
+            error.config.headers[
+              "Authorization"
+            ] = `Bearer ${refRes.data.accessToken}`;
 
             console.log(refRes);
             console.log(`token refreshed ${refRes.data.accessToken}`);
