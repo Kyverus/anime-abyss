@@ -3,10 +3,10 @@ import { computed, watchEffect } from "vue";
 const emits = defineEmits(["hasErrors"]);
 const props = defineProps<{
   user: {
-    username?: String;
-    email?: String;
-    password?: String;
-    confirmPassword?: String;
+    username?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
   };
 }>();
 
@@ -17,10 +17,10 @@ watchEffect(() => {
 });
 
 function validateUser(user: {
-  username?: String;
-  email?: String;
-  password?: String;
-  confirmPassword?: String;
+  username?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
 }): any[] {
   const newErrors = [];
   if (
@@ -31,15 +31,12 @@ function validateUser(user: {
   ) {
     newErrors.push({ message: "Inputs should not be empty" });
   }
-  // if () {
-  //   newErrors.push({ message: "Email should not be empty" });
-  // }
-  // if () {
-  //   newErrors.push({ message: "Password should not be empty" });
-  // }
-  // if () {
-  //   newErrors.push({ message: "Pasword Confirmation should not be empty" });
-  // }
+
+  if (user.email) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
+      newErrors.push({ message: "Provide a valid email address" });
+    }
+  }
 
   return newErrors;
 }

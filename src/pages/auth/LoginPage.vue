@@ -19,7 +19,7 @@ async function handleSumbit(e: any) {
   const res = await authStore.loginUser(formDetails);
 
   if (res) {
-    router.push("/listentries");
+    router.push("/anime-entries");
   }
 }
 
@@ -29,21 +29,32 @@ function setErrors(value: Boolean) {
 </script>
 
 <template>
-  <div class="flex flex-col items-center mt-20">
+  <div class="flex flex-col items-center mt-20 px-10">
     <form
       action=""
-      class="flex flex-col w-[500px] bg-blue-400 mx-auto p-4 space-y-2 rounded-md text-black"
+      class="flex flex-col container md:w-[500px] bg-abyss-blue-3 mx-auto p-4 space-y-2 rounded-md text-white"
     >
-      <div class="text-center">LOGIN TO THE ABYSS</div>
+      <div class="text-center font-bold">LOGIN TO THE ABYSS</div>
       <br />
       <label for="email">EMAIL</label>
-      <input required v-model="formDetails.email" id="email" type="text" />
+      <input
+        class="text-black"
+        required
+        v-model="formDetails.email"
+        id="email"
+        type="text"
+      />
       <label for="password">PASSWORD</label>
-      <input v-model="formDetails.password" id="password" type="password" />
+      <input
+        class="text-black"
+        v-model="formDetails.password"
+        id="password"
+        type="password"
+      />
       <br />
       <button
         class="text-white"
-        :class="hasErrors ? `bg-red-900` : `bg-blue-900`"
+        :class="hasErrors ? `bg-gray-700` : `bg-abyss-purple-2`"
         @click="handleSumbit"
         :disabled="hasErrors == true"
       >

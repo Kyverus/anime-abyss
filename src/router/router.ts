@@ -4,9 +4,10 @@ import LoginPage from "../pages/auth/LoginPage.vue";
 import RegisterPage from "../pages/auth/RegisterPage.vue";
 import AnimePage from "../pages/AnimePage.vue";
 import MangaPage from "../pages/MangaPage.vue";
-import ListEntries from "../pages/protected/ListEntries.vue";
+import AnimeEntries from "../pages/protected/AnimeEntries.vue";
 import AnimeInfoPage from "../pages/AnimeInfoPage.vue";
 import MangaInfoPage from "../pages/MangaInfoPage.vue";
+import AddAnimeEntry from "../pages/protected/AddAnimeEntry.vue";
 
 const routes = [
   {
@@ -42,8 +43,16 @@ const routes = [
     component: MangaPage,
   },
   {
-    path: "/listentries",
-    component: ListEntries,
+    path: "/anime-entries",
+    component: AnimeEntries,
+    meta: {
+      needsAuth: true,
+    },
+  },
+  {
+    path: "/add-anime-entry/:animeId",
+    name: "addAnime",
+    component: AddAnimeEntry,
     meta: {
       needsAuth: true,
     },
@@ -61,7 +70,7 @@ router.beforeEach(async (to) => {
   if (!authStore.refresh.loadedOnce) {
     const res = await authStore.refreshTokenOnStart();
     authStore.refresh.loadedOnce = true;
-    if (!res) return { name: "Login" };
+    if (!res && to.meta.needsAuth) return "/anime";
   }
   if (to.meta.needsAuth) {
     if (!authStore.auth.isLoggedIn) {
@@ -72,7 +81,7 @@ router.beforeEach(async (to) => {
     authStore.auth.isLoggedIn &&
     (to.name == "Login" || to.name == "Register")
   ) {
-    return false;
+    return "/";
   }
 });
 
