@@ -58,21 +58,38 @@ function setErrors(value: Boolean) {
 </script>
 
 <template>
-  <div class="min-h-dvh flex flex-col items-center mt-20">
+  <div class="flex flex-col items-center mt-20 px-10">
     <form
       action=""
-      class="flex flex-col w-[500px] bg-blue-400 mx-auto p-4 space-y-2 rounded-md text-black"
+      class="flex flex-col container md:w-[500px] bg-abyss-blue-3 mx-auto p-4 space-y-2 rounded-md text-white"
     >
-      <div class="text-center">REGISTER TO THE ABYSS</div>
+      <div class="text-center font-bold">REGISTER TO THE ABYSS</div>
       <br />
       <label for="username">USERNAME</label>
-      <input v-model="formDetails.username" id="username" type="text" />
+      <input
+        class="text-black"
+        v-model="formDetails.username"
+        id="username"
+        type="text"
+      />
       <label for="email">EMAIL</label>
-      <input required v-model="formDetails.email" id="email" type="text" />
+      <input
+        class="text-black"
+        required
+        v-model="formDetails.email"
+        id="email"
+        type="text"
+      />
       <label for="password">PASSWORD</label>
-      <input v-model="formDetails.password" id="password" type="password" />
+      <input
+        class="text-black"
+        v-model="formDetails.password"
+        id="password"
+        type="password"
+      />
       <label for="confirmPassword">CONFIRM PASSWORD</label>
       <input
+        class="text-black"
         v-model="formDetails.confirmPassword"
         id="confirmPassword"
         type="password"
@@ -80,7 +97,7 @@ function setErrors(value: Boolean) {
       <br />
       <button
         class="text-white"
-        :class="hasErrors ? `bg-red-900` : `bg-blue-900`"
+        :class="hasErrors ? `bg-gray-700` : `bg-abyss-purple-2`"
         @click="handleSumbit"
         :disabled="hasErrors == true"
       >

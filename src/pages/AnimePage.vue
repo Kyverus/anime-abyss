@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-let topAnime = ref([]);
+let topAnime = ref<any[]>([]);
 let pagination = ref({
   has_next_page: false,
   current_page: 1,

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 interface Item {
-  mal_id: String;
+  mal_id: string;
   title: string;
   images: any;
+  status: string;
+  type: string;
 }
 defineEmits(["infoClick"]);
 defineProps<{ list: Item[] }>();
@@ -25,8 +27,17 @@ defineProps<{ list: Item[] }>();
           />
         </div>
 
-        <div class="w-full px-2 truncate">{{ item.title }}</div>
-        <button class="text-center w-full bg-abyss-blue-2">Add To List</button>
+        <div class="w-full px-2 truncate bg-abyss-purple-3">
+          {{ item.title }}
+        </div>
+        <div>
+          <div class="px-2 bg-abyss-blue-3">
+            {{ item.type }}
+          </div>
+          <div class="px-2 bg-abyss-blue-2">
+            {{ item.status }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
