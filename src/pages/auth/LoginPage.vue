@@ -6,6 +6,7 @@ import { useAuthStore } from "../../stores/auth";
 
 const authStore = useAuthStore();
 const router = useRouter();
+const loading = ref(false);
 const formDetails = reactive({
   email: "",
   password: "",
@@ -15,12 +16,19 @@ const hasErrors = ref<Boolean>(false);
 
 async function handleSumbit(e: any) {
   e.preventDefault();
+  loading.value = true;
   if (hasErrors.value) return;
   const res = await authStore.loginUser(formDetails);
 
-  if (res) {
-    router.push("/anime-entries");
+  if (res.success) {
+    router.push("/entries");
+  } else {
+    console.log(res.errors);
   }
+
+  formDetails.email = "";
+  formDetails.password = "";
+  loading.value = false;
 }
 
 function setErrors(value: Boolean) {
@@ -50,13 +58,14 @@ function setErrors(value: Boolean) {
         v-model="formDetails.password"
         id="password"
         type="password"
+        autocomplete="off"
       />
       <br />
       <button
         class="text-white"
-        :class="hasErrors ? `bg-gray-700` : `bg-abyss-purple-2`"
+        :class="hasErrors || loading ? `bg-gray-700` : `bg-abyss-purple-2`"
         @click="handleSumbit"
-        :disabled="hasErrors == true"
+        :disabled="hasErrors == true || loading == true"
       >
         LOGIN
       </button>

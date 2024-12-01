@@ -34,10 +34,14 @@ function toggleCollapse() {
         </div>
         <div class="hidden md:flex justify-center">
           <div class="flex items-center">
-            <RouterLink to="/anime"><div class="px-5">ANIME</div></RouterLink>
-            <RouterLink to="/manga"><div class="px-5">MANGA</div></RouterLink>
-            <RouterLink to="/anime-entries">
-              <div class="px-5">ANIME ENTRIES</div>
+            <RouterLink to="/anime"
+              ><div class="hover:bg-abyss-purple-2 px-5">ANIME</div></RouterLink
+            >
+            <RouterLink to="/manga"
+              ><div class="hover:bg-abyss-purple-2 px-5">MANGA</div></RouterLink
+            >
+            <RouterLink to="/entries">
+              <div class="hover:bg-abyss-purple-2 px-5">ENTRIES</div>
             </RouterLink>
           </div>
         </div>
@@ -57,17 +61,25 @@ function toggleCollapse() {
         class="md:hidden pb-3"
         :class="{ hidden: !collapse }"
       >
-        <RouterLink to="/anime"><div class="px-5">ANIME</div></RouterLink>
-        <RouterLink to="/manga"><div class="px-5">MANGA</div></RouterLink>
-        <RouterLink to="/anime-entries">
-          <div class="px-5">ANIME ENTRIES</div>
+        <RouterLink to="/anime"
+          ><div class="hover:bg-abyss-purple-2 px-5">ANIME</div></RouterLink
+        >
+        <RouterLink to="/manga"
+          ><div class="hover:bg-abyss-purple-2 px-5">MANGA</div></RouterLink
+        >
+        <RouterLink to="/entries">
+          <div class="hover:bg-abyss-purple-2 px-5">Entries</div>
         </RouterLink>
 
         <div class="pt-3">
           <template v-if="!authStore.auth.isLoggedIn">
-            <RouterLink to="/login"><div class="px-5">LOGIN</div></RouterLink>
+            <RouterLink to="/login"
+              ><div class="hover:bg-abyss-purple-2 px-5">LOGIN</div></RouterLink
+            >
             <RouterLink to="/register"
-              ><div class="px-5">REGISTER</div></RouterLink
+              ><div class="hover:bg-abyss-purple-2 px-5">
+                REGISTER
+              </div></RouterLink
             >
           </template>
           <LogoutButton v-if="authStore.auth.isLoggedIn" />

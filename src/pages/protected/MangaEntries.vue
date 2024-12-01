@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { ref, onMounted, computed } from "vue";
-import { useAnimeEntryStore } from "../../stores/animeentries";
 import LoadingFlex from "../status/LoadingFlex.vue";
+import { useMangaEntryStore } from "../../stores/mangaentries";
 
-const animeEntryStore = useAnimeEntryStore();
-const listEntries = computed(() => animeEntryStore.listEntries);
+const mangaEntryStore = useMangaEntryStore();
+const listEntries = computed(() => mangaEntryStore.listEntries);
 const loading = ref(false);
 
 onMounted(async () => {
@@ -12,7 +12,7 @@ onMounted(async () => {
 
   if (listEntries.value.length == 0) {
     console.log("load");
-    const res = await animeEntryStore.fetchAnimeEntries();
+    const res = await mangaEntryStore.fetchMangaEntries();
 
     if (res.success) {
       console.log("success");
@@ -20,7 +20,6 @@ onMounted(async () => {
       console.log(res.errors);
     }
   }
-
   loading.value = false;
 });
 </script>
