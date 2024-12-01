@@ -34,24 +34,31 @@ export const useAuthStore = defineStore("auth", () => {
         ] = `BEARER ${response.data.accessToken}`;
 
         auth.value.isLoggedIn = true;
-        return true;
+        return { success: true };
       }
-      return false;
+      throw response;
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
-        console.log(error.response?.data);
+        return { success: false, errors: error.response?.data };
       } else {
-        console.log(error);
+        return { success: false, errors: error };
       }
-      return false;
     }
   }
 
   async function logoutUser() {
-    const response = await axiosPrivate.get("/api/users/logout");
-    axiosPrivate.defaults.headers.common["Authorization"] = "";
-    console.log("logged out", response);
-    auth.value.isLoggedIn = false;
+    try {
+      const response = await axiosPrivate.get("/api/users/logout");
+      axiosPrivate.defaults.headers.common["Authorization"] = "";
+      console.log("logged out", response);
+      auth.value.isLoggedIn = false;
+    } catch (error: unknown | AxiosError) {
+      if (isAxiosError(error)) {
+        return { success: false, errors: error.response?.data };
+      } else {
+        return { success: false, errors: error };
+      }
+    }
   }
 
   async function refreshTokenOnStart() {
@@ -69,14 +76,17 @@ export const useAuthStore = defineStore("auth", () => {
         console.log(`access token refreshed ${refRes.data.accessToken}`);
         auth.value.isLoggedIn = true;
         refresh.value.loading = false;
-        return true;
+        return { success: true };
       }
-      return false;
-    } catch (error) {
-      console.log("ref token invalid", error);
+      throw refRes;
+    } catch (error: unknown | AxiosError) {
       auth.value.isLoggedIn = false;
       refresh.value.loading = false;
-      return false;
+      if (isAxiosError(error)) {
+        return { success: false, errors: error.response?.data };
+      } else {
+        return { success: false, errors: error };
+      }
     }
   }
 
