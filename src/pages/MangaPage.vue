@@ -52,8 +52,8 @@ function changeQuery(value: string) {
 </script>
 
 <template>
-  <SearchBar @searchQuery="changeQuery" class="mt-5" />
-  <ItemList :list="topManga" class="mt-20" @info-click="goToMangaInfo" />
+  <SearchBar @searchQuery="changeQuery" class="mt-10" />
+  <ItemList :list="topManga" class="mt-10" @info-click="goToMangaInfo" />
 
   <div v-if="topManga.length > 0">
     <Pagination

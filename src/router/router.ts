@@ -75,7 +75,11 @@ const router = createRouter({
 
 const authStore = useAuthStore();
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from) => {
+  if (to == from) {
+    return;
+  }
+
   if (!authStore.refresh.loadedOnce) {
     const res = await authStore.refreshTokenOnStart();
     authStore.refresh.loadedOnce = true;
