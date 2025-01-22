@@ -30,7 +30,16 @@ function toggleCollapse() {
               <v-icon name="oi-three-bars" class="size-[19.19px]" />
             </div>
           </div>
-          <RouterLink to="/">ANIME ABYSS</RouterLink>
+          <div class="flex items-center justify-center">
+            <img
+              class="size-10"
+              src="/src/assets/anime-abyss-logo-alt-transparent.png"
+              alt=""
+            />
+            <RouterLink to="/"
+              ><div class="hover:text-abyss-purple-4">ANIME ABYSS</div>
+            </RouterLink>
+          </div>
         </div>
         <div class="hidden md:flex justify-center">
           <div class="flex items-center">
@@ -47,9 +56,13 @@ function toggleCollapse() {
         </div>
         <div class="hidden xs:flex items-center justify-center">
           <template v-if="!authStore.auth.isLoggedIn">
-            <RouterLink to="/login"><div class="px-2">LOGIN</div></RouterLink>
+            <RouterLink to="/login"
+              ><div class="hover:bg-abyss-purple-2 px-2">LOGIN</div></RouterLink
+            >
             <RouterLink to="/register"
-              ><div class="px-2">REGISTER</div></RouterLink
+              ><div class="hover:bg-abyss-purple-2 px-2">
+                REGISTER
+              </div></RouterLink
             >
           </template>
           <LogoutButton v-if="authStore.auth.isLoggedIn" />

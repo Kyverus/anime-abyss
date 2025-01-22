@@ -4,6 +4,12 @@ import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/auth";
 
+//This is for showcasing
+const testUser = {
+  email: "testinguser@gmail.com",
+  password: "TestingUser12345",
+};
+
 const authStore = useAuthStore();
 const router = useRouter();
 const loading = ref(false);
@@ -33,6 +39,11 @@ async function handleSumbit(e: any) {
 
 function setErrors(value: Boolean) {
   hasErrors.value = value;
+}
+
+function inputTestCredentials() {
+  formDetails.email = testUser.email;
+  formDetails.password = testUser.password;
 }
 </script>
 
@@ -72,5 +83,18 @@ function setErrors(value: Boolean) {
 
       <UserInputValidator :user="formDetails" @hasErrors="setErrors" />
     </form>
+    <div class="bg-abyss-purple-2 flex-col container md:w-[500px] mt-5 p-5">
+      <div>
+        <div class="font-bold">Testing Account:</div>
+        <h2>Email: {{ testUser.email }}</h2>
+        <h2>Password: {{ testUser.password }}</h2>
+      </div>
+      <button
+        class="w-full text-center bg-abyss-blue-3 mt-5"
+        @click="inputTestCredentials"
+      >
+        Try Test Account
+      </button>
+    </div>
   </div>
 </template>
