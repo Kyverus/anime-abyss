@@ -3,6 +3,9 @@ const BASE_URL = "https://anime-abyss-backend.vercel.app";
 
 export default axios.create({
   baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 const axiosPrivate = axios.create({
