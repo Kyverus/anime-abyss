@@ -19,7 +19,7 @@ let query = ref("");
 watchEffect(() => {
   if (query.value == "") {
     fetch(
-      `https://api.jikan.moe/v4/anime?page=${page.value}&order_by=popularity&sfw=true`
+      `https://api.tenrai.org/v1/anime?page=${page.value}&order_by=popularity&sfw=true`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -29,7 +29,7 @@ watchEffect(() => {
       .then(() => console.log("fetch list"));
   } else {
     fetch(
-      `https://api.jikan.moe/v4/anime?page=${page.value}&order_by=popularity&sfw=true&q=${query.value}`
+      `https://aapi.tenrai.org/v1/anime?page=${page.value}&order_by=popularity&sfw=true&q=${query.value}`
     )
       .then((res) => res.json())
       .then((res) => {

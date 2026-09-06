@@ -19,7 +19,7 @@ let query = ref("");
 watchEffect(() => {
   if (query.value == "") {
     fetch(
-      `https://api.jikan.moe/v4/manga?page=${page.value}&order_by=popularity&sfw=true`
+      `https://api.tenrai.org/v1/manga?page=${page.value}&order_by=popularity&sfw=true`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -28,7 +28,7 @@ watchEffect(() => {
       });
   } else {
     fetch(
-      `https://api.jikan.moe/v4/manga?page=${page.value}&order_by=popularity&sfw=true&q=${query.value}`
+      `https://api.tenrai.org/v1/manga?page=${page.value}&order_by=popularity&sfw=true&q=${query.value}`
     )
       .then((res) => res.json())
       .then((res) => {

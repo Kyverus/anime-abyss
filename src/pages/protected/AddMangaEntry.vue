@@ -14,7 +14,7 @@ const userInput = reactive({
   category: "",
 });
 
-fetch(`https://api.jikan.moe/v4/manga/${route.params.mangaId}`)
+fetch(`https://api.tenrai.org/v1/manga/${route.params.mangaId}`)
   .then((res) => res.json())
   .then((res) => {
     manga.value = res.data;
